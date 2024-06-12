@@ -10,6 +10,22 @@
 # 1 = Debug error / general error
 # 2 = Input error
 
+
+move_contents() {
+    local directory="$0"
+    local suffix="$1"
+    cd $directory
+    mkdir -p "$directory/$suffix"
+
+    for FILE in *; do
+        if [ -e "$FILE" ]; then
+            mv "$FILE" "$suffix"
+        else
+            echo "No files found."
+        fi
+    done
+}
+
 # Input verification
 # Edge case: no input
 if [ $# -eq 0 ]; then
@@ -23,19 +39,10 @@ if [ ! -d $1 ]; then
     exit 2
 fi
 
-move_contents() {
-
-}
 
 # Format for move_contents
 cd $1
-for FILE in *; do
-    if [ -e "$FILE" ]; then
-        echo "$FILE"
-    else
-        echo "No files found."
-    fi
-done
+move_contents $1 "Downloads"
 
 exit 0
 
