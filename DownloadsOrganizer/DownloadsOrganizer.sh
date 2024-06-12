@@ -12,14 +12,14 @@
 
 
 move_contents() {
-    local directory="$0"
-    local suffix="$1"
-    cd $directory
+    local directory="$1"
+    local suffix="$2"
+    echo "$directory/$suffix"
     mkdir -p "$directory/$suffix"
 
     for FILE in *; do
         if [ -e "$FILE" ]; then
-            mv "$FILE" "$suffix"
+            mv "./$FILE" "$suffix"
         else
             echo "No files found."
         fi
@@ -42,7 +42,7 @@ fi
 
 # Format for move_contents
 cd $1
-move_contents $1 "Downloads"
+move_contents $PWD Downloads
 
 exit 0
 
