@@ -19,15 +19,26 @@ move_contents() {
     echo "$directory/$suffix"
     mkdir -p "$directory/$suffix"
 
+    echo "Printing extensions"
+    for EXTENSION2 in ${EXTENSION_ARRAY[@]}; do
+        echo "$EXTENSION2"
+    done
+
     for FILE in *; do
-        if [! -e "$FILE" ]; then
+        if [ ! -e "$FILE" ]; then
             echo "No files found."
             rmdir "$directory/$suffix"
 
         else
             for EXTENSION in "${EXTENSION_ARRAY[@]}"; do
-                if [[ $FILE == *$EXTENSION* ]]; then
+                echo "Working on: $FILE"
+                echo "    Testing against: $EXTENSION"
+                if [[ $FILE == *"$EXTENSION"* ]]; then
+                    echo "        Match Found"
                     mv "./$FILE" "$suffix"
+
+                else
+                    echo "        "
                 fi
             done
         fi
@@ -58,7 +69,7 @@ fi
 
 # Format for move_contents
 cd $1
-move_contents $PWD Videos VIDEO_EXTENSIONS
+move_contents $PWD Videos $VIDEO_EXTENSIONS
 
 exit 0
 
