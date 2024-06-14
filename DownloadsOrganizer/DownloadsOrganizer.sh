@@ -14,17 +14,33 @@
 move_contents() {
     local directory="$1"
     local suffix="$2"
+    local EXTENSION_ARRAY="$3"
+
     echo "$directory/$suffix"
     mkdir -p "$directory/$suffix"
 
     for FILE in *; do
-        if [ -e "$FILE" ]; then
-            mv "./$FILE" "$suffix"
-        else
+        if [! -e "$FILE" ]; then
             echo "No files found."
+            rmdir "$directory/$suffix"
+
+        else
+            for EXTENSION in "${EXTENSION_ARRAY[@]}"; do
+                if [[ $FILE == *$EXTENSION* ]]; then
+                    mv "./$FILE" "$suffix"
+                fi
+            done
         fi
     done
 }
+
+# File extensions
+PHOTO_EXTENSIONS=(".jpg" ".jpeg" ".png" ".gif" ".svg")
+VIDEO_EXTENSIONS=(".mp4" ".mkv" ".avi")
+DOCUMENT_EXTENSIONS=(".pdf" ".docx" ".odt" ".doc" ".html" ".htm")
+ARCHIVES_EXTENSIONS=(".zip" ".rar" ".tar" ".tar.gz")
+SCRIPTS_EXTENSIONS=(".sh" ".py" ".cpp" ".c" )
+APP_EXTENSIONS=(".deb" ".rpm" ".AppImage")
 
 # Input verification
 # Edge case: no input
@@ -42,7 +58,7 @@ fi
 
 # Format for move_contents
 cd $1
-move_contents $PWD Downloads
+move_contents $PWD Videos VIDEO_EXTENSIONS
 
 exit 0
 
