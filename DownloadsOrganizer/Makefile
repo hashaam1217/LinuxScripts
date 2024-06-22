@@ -1,7 +1,7 @@
 # Makefile for DownloadOrganizer
 
 build:
-	./DownloadsOrganizer.sh "$(shell pwd)" Hashaam
+	./DownloadsOrganizer.sh "$(shell pwd)"/Hashaam
 
 clean:
 	rm -f -r Hashaam

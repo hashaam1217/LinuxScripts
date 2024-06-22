@@ -16,7 +16,7 @@ move_contents() {
     local suffix="$2"
     local EXTENSION_ARRAY="$3"
 
-    echo "$directory/$suffix"
+    #echo "$directory/$suffix"
     mkdir -p "$directory/$suffix"
 
     echo "Printing extensions"
@@ -38,7 +38,7 @@ move_contents() {
                     mv "./$FILE" "$suffix"
 
                 else
-                    echo "        "
+                    echo "$FILE Does not match extension"
                 fi
             done
         fi
