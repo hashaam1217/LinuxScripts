@@ -43,16 +43,25 @@ move_contents() {
                 fi
             done
         fi
+
+    done
+
+    #Removes folder if no relevant file
+    for FILE in $directory/$suffix/*; do
+        if [ ! -e "$FILE" ]; then
+            echo "No files found. Deleting directory"
+            rmdir "$directory/$suffix"
+        fi
     done
 }
 
 # File extensions
 PHOTO_EXTENSIONS=(".jpg" ".jpeg" ".png" ".gif" ".svg")
 VIDEO_EXTENSIONS=(".mp4" ".mkv" ".avi")
-DOCUMENT_EXTENSIONS=(".pdf" ".docx" ".odt" ".doc" ".html" ".htm")
-ARCHIVES_EXTENSIONS=(".zip" ".rar" ".tar" ".tar.gz")
-SCRIPTS_EXTENSIONS=(".sh" ".py" ".cpp" ".c" )
-APP_EXTENSIONS=(".deb" ".rpm" ".AppImage")
+DOCUMENT_EXTENSIONS=(".pdf" ".docx" ".odt" ".doc" ".html" ".htm" ".txt" ".xlsx" ".webp" ".ovpn")
+ARCHIVES_EXTENSIONS=(".zip" ".rar" ".tar" ".tar.gz" ".iso" ".torrent" ".pkz")
+SCRIPTS_EXTENSIONS=(".sh" ".py" ".cpp" ".c")
+APP_EXTENSIONS=(".deb" ".rpm" ".AppImage" ".exe" ".msi")
 
 # Input verification
 # Edge case: no input
@@ -71,6 +80,11 @@ fi
 # Format for move_contents
 cd $1
 move_contents $PWD Videos "${VIDEO_EXTENSIONS[@]}"
+move_contents $PWD Photos "${PHOTO_EXTENSIONS[@]}"
+move_contents $PWD Documents "${DOCUMENT_EXTENSIONS[@]}"
+move_contents $PWD Archives "${ARCHIVES_EXTENSIONS[@]}"
+move_contents $PWD Scripts "${SCRIPTS_EXTENSIONS[@]}"
+move_contents $PWD Apps "${APP_EXTENSIONS[@]}"
 
 exit 0
 
