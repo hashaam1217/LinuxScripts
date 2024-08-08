@@ -14,7 +14,8 @@
 move_contents() {
     local directory="$1"
     local suffix="$2"
-    local EXTENSION_ARRAY="$3"
+    shift 2
+    local EXTENSION_ARRAY=("$@")
 
     #echo "$directory/$suffix"
     mkdir -p "$directory/$suffix"
@@ -69,7 +70,7 @@ fi
 
 # Format for move_contents
 cd $1
-move_contents $PWD Videos $VIDEO_EXTENSIONS
+move_contents $PWD Videos "${VIDEO_EXTENSIONS[@]}"
 
 exit 0
 
